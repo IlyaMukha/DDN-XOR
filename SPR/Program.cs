@@ -1,6 +1,21 @@
 ﻿namespace SPR
 {
 
+    public class Neiron_New
+    {
+        public int Id { get; set; }
+        public double InputValue { get; set; }
+        public double OutputValue { get; set; }
+    }
+
+    public class Sinops_New
+    {
+        public int Id { get; set; }
+        public Neiron_New StartNeiron { get; set; }
+        public Neiron_New FinishNeiron { get; set; }
+        public double Value { get; set; }
+    }
+
     public class Neiron
     {
         public string Id { get; set; }
@@ -101,9 +116,79 @@
     {
         static void Main(string[] args)
         {
-            var neirons = Helper.Create(3, 2);
+            //var neirons = Helper.Create(3, 2);
+            //Helper.Print(neirons);
 
-            Helper.Print(neirons);
+
+            int lvlvs = 3;
+            Neiron_New[][] neirons = new Neiron_New[lvlvs][];
+            neirons[0] = new Neiron_New[2];
+            neirons[1] = new Neiron_New[2];
+            neirons[2] = new Neiron_New[1];
+
+            int ids = 0;
+
+            for (int i = 0; i < neirons.Length; i++)
+            {
+                for (int j = 0; j < neirons[i].Length; j++)
+                {
+                    neirons[i][j] = new Neiron_New() { Id = ids};
+                    ids++;
+                }
+            }
+
+            for (int i = 0; i < neirons.Length; i++)
+            {
+                for (int j = 0; j < neirons[i].Length; j++)
+                {
+                    Console.Write(neirons[i][j].Id + " ");
+                }
+                Console.WriteLine();
+            }
+
+
+            Console.WriteLine("--------------------");
+
+            Sinops_New[][] sinopses = new Sinops_New[lvlvs-1][];
+            sinopses[0] = new Sinops_New[neirons[0].Length * neirons[1].Length];
+            sinopses[1] = new Sinops_New[neirons[1].Length * neirons[2].Length];
+
+            ids = 0;
+
+            for (int i = 0; i < neirons.Length - 1; i++)
+            {
+                Console.WriteLine(1 + "===");
+                for (int j = 0; j < neirons[i].Length; j++)
+                {
+                    Console.WriteLine(j);
+                    sinopses[i][j] = new Sinops_New() { Id = ids, Value = new Random().NextDouble() * (1 + 1)  - 1 };
+                    ids++;
+                }
+                Console.WriteLine(2 + "===");
+                for (int j = neirons[i].Length; j < neirons[i].Length * neirons[i + 1].Length; j++)
+                {
+                    Console.WriteLine(j);
+                    sinopses[i][j] = new Sinops_New() { Id = ids, Value = new Random().NextDouble() * (1 + 1) - 1 };
+                    ids++;
+                }
+            }
+
+
+            Console.WriteLine("--------------------");
+
+
+            for (int i = 0; i < sinopses.Length; i++)
+            {
+                for (int j = 0; j < sinopses[i].Length; j++)
+                {
+                    Console.Write(sinopses[i][j].Id + " ");
+                }
+                Console.WriteLine();
+            }
+
+
+
+
         }
     }
 }
