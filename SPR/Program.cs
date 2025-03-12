@@ -150,24 +150,27 @@
             Console.WriteLine("--------------------");
 
             Sinops_New[][] sinopses = new Sinops_New[lvlvs-1][];
-            sinopses[0] = new Sinops_New[neirons[0].Length * neirons[1].Length];
-            sinopses[1] = new Sinops_New[neirons[1].Length * neirons[2].Length];
+            for (int i = 0; i < lvlvs - 1; i++)
+            {
+                sinopses[i] = new Sinops_New[neirons[i].Length * neirons[i+1].Length];
+            }
 
             ids = 0;
 
             for (int i = 0; i < neirons.Length - 1; i++)
             {
                 Console.WriteLine(1 + "===");
-                for (int j = 0; j < neirons[i].Length; j++)
+                for (int j = 0; j < neirons[i + 1].Length; j++)
                 {
-                    Console.WriteLine(j);
+                    Console.WriteLine(i + "-" +j + " = " + ids);
                     sinopses[i][j] = new Sinops_New() { Id = ids, Value = new Random().NextDouble() * (1 + 1)  - 1 };
                     ids++;
                 }
                 Console.WriteLine(2 + "===");
-                for (int j = neirons[i].Length; j < neirons[i].Length * neirons[i + 1].Length; j++)
+                int x = (i + 2 > neirons.Length) ? neirons[i + 1].Length * neirons[i + 2].Length : neirons[i].Length * neirons[i + 1].Length;
+                for (int j = neirons[i + 1].Length; j < x; j++)
                 {
-                    Console.WriteLine(j);
+                    Console.WriteLine(i + "-" + j + " = " + ids);
                     sinopses[i][j] = new Sinops_New() { Id = ids, Value = new Random().NextDouble() * (1 + 1) - 1 };
                     ids++;
                 }
